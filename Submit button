@@ -1,0 +1,55 @@
+import React, {useState} from 'react';
+import {
+  Button,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+
+const App = () => {
+  const [text, onChangeText] = useState('');
+  const [print, setPrint] = useState(false);
+
+  return (
+    <SafeAreaView>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeText}
+        value={text}
+      />
+      <Button
+        onPress={() => setPrint(true)}
+        title="Print"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
+      <View style={{marginTop: 60}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 20,
+            color: 'black',
+            fontWeight: 'bold',
+            textDecorationLine: 'underline',
+          }}>
+          {'Output'}
+        </Text>
+        <Text>{print && text}</Text>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    marginTop:120,
+  },
+});
+
+export default App;
