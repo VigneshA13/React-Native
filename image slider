@@ -1,0 +1,65 @@
+import React, {useState} from 'react';
+import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 50,
+  },
+  tinyLogo: {
+    width: 250,
+    height: 250,
+  },
+  logo: {
+    width: 66,
+    height: 58,
+  },
+});
+
+const App = () => {
+  const images = [
+    'https://reactnative.dev/img/tiny_logo.png',
+    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+    'https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg',
+  ];
+  const [slide, setSlide] = useState(0);
+  const Slider = () => {
+    if (images.length == slide) {
+      setSlide(slide - 1);
+    } else {
+      setSlide(slide + 1);
+    }
+    
+  };
+  const Slider1 = () => {
+    if (images.length != slide) {
+      setSlide(slide - 1);
+    } else {
+      setSlide(slide + 1);
+    }
+    
+  };
+
+  return (
+    <View style={styles.container}>
+      <Image
+        style={styles.tinyLogo}
+        source={{
+          uri: images[slide] ? images[slide] : setSlide(0),
+        }}
+      />
+      <TouchableOpacity
+        style={{padding: 20, backgroundColor: 'red', marginTop: -110,width:60, }}
+        onPress={() => Slider1()}>
+        <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold',}}>  {'<'} </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{padding: 20, backgroundColor: 'red', marginTop: -120,width:50, marginLeft:367}}
+        onPress={() => Slider()}>
+        <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold',}}>></Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default App;
