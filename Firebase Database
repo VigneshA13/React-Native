@@ -1,0 +1,211 @@
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View,TextInput,TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { db } from './config';
+import { doc, setDoc,addDoc,collection,getDocs } from "firebase/firestore";
+
+export default function App() {
+  const [username, setname] = useState('');
+  const [email, setemail] = useState('');
+  const [data, setData] = useState();
+  const header = ['id', 'name', 'mail'];
+
+
+  function create () {
+    // Add a new document in collection "cities"
+    addDoc(collection(db, "newdatabase"), {
+      email: email,
+      name: username,
+    }).then( () => {
+      alert("Data Added Successsfully...")
+      console.log("Data Added Successsfully...")
+    }).catch( (error) => {
+      console.log(error)
+    });
+    console.log("csk");
+  }
+  function selectAll () {
+    getDocs(collection(db, "newdatabase")).then(docSnap => {
+      let users = [];
+      docSnap.forEach((doc) => {
+        users.push( {...doc.data(), id:doc.id})}
+        );
+        setData(users);
+        
+    });   
+    
+  }
+  console.log("Data :  ", data)
+
+  return (
+    <View style={styles.container}>
+        <View  style={styles.header} >
+          <Text style={styles.header_text}>Firebase Connection</Text>
+        </View>
+        <View  style={styles.body} >
+          <View>
+            <Text style={styles.body_text}>UserName : </Text>
+            <TextInput
+              placeholder="Enter UserName"
+              value={username}
+              style={styles.input}
+              onChangeText={(username) => {setname(username)}}
+            ></TextInput>
+          </View>
+          <View style={{marginTop: 30}}>
+            <Text style={styles.body_text}>Password : </Text>
+            <TextInput
+              placeholder="Enter Password"
+              style={styles.input}
+              value={email}
+              onChangeText={(email) => {setemail(email)}}
+            ></TextInput>
+          </View>
+          <View style={{alignItems: 'stretch',  justifyContent: 'center',}}>
+            <TouchableOpacity style={styles.button} onPress={() => create()}>
+              <Text style={{fontSize: 20, color: 'white'}}>Add Data</Text>
+            </TouchableOpacity>
+          </View>
+          {/* <View style={{alignItems: 'center',  justifyContent: 'center', marginTop: -75}}>
+            <TouchableOpacity style={styles.button} onPress={() => update()}>
+              <Text style={{fontSize: 20, color: 'white'}}>Update</Text>
+            </TouchableOpacity>
+            </View>*/}
+          <View style={{alignItems: 'center',  justifyContent: 'center', marginTop: -75, marginLeft: 265}}>
+            <TouchableOpacity style={styles.button} onPress={() => selectAll()}>
+              <Text style={{fontSize: 20, color: 'white'}}>Select</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+         {/* Table */}
+         <View style={styles.table}>
+          {/* Header */}
+          <View style={styles.headerRow}>
+            {header.map(e => (
+              <Text style={styles.headerCell}>{e}</Text>
+            ))}
+          </View>
+          {/* Body */}
+          {data &&
+            data.map((e, i) => (
+              <View style={styles.bodyRow}>
+                <Text
+                  style={[
+                    styles.bodyCell,
+                    {backgroundColor: i % 2 === 0 && 'rgba(0,0,0,0.2)'},
+                  ]}>
+                  {i + 1}
+                </Text>
+                <Text
+                  style={[
+                    styles.bodyCell,
+                    {backgroundColor: i % 2 === 0 && 'rgba(0,0,0,0.2)'},
+                  ]}>
+                  {e.name}
+                </Text>
+                <Text
+                  style={[
+                    styles.bodyCell,
+                    {backgroundColor: i % 2 === 0 && 'rgba(0,0,0,0.2)'},
+                  ]}>
+                  {e.email}
+                </Text>
+              </View>
+            ))}
+        </View>
+
+      </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  table: {
+    marginVertical: 16,
+    marginHorizontal: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    backgroundColor: '#f5f5f5',
+    height: 40,
+  },
+  headerCell: {
+    flex: 1,
+    alignSelf: 'stretch',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    borderRightWidth: 1,
+    borderRightColor: '#ddd',
+  },
+  bodyRow: {
+    flexDirection: 'row',
+    height: 40,
+  },
+  bodyCell: {
+    flex: 1,
+    alignSelf: 'stretch',
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 8,
+  },
+  container: {
+    flex: 10,
+    backgroundColor: '#fff',
+  },
+  header:{
+    flex: 1,
+    borderBottomWidth: 2,
+    borderBottomColor: 'black',
+    backgroundColor: 'yellow',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  header_text:{
+    fontSize: 30,
+  },
+  body: {
+    flex: 8,
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    
+  },
+  body_text: {
+    marginLeft: 30,
+    fontSize: 20,
+  },
+  input:{
+    height: 50,
+    width: 220,
+    margin: 12,
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 10,
+    marginTop: - 35,
+    marginLeft: 145,
+    fontSize: 20,
+  },
+  button:{
+    height: 50,
+    width: 120,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'green',
+  },
+  fotter: {
+    flex: 3,
+    borderTopWidth: 2,
+    borderTopColor: 'black',
+    backgroundColor: 'yellow',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fotter_text:{
+    fontSize: 20,
+  },
+});
