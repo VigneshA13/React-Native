@@ -1,0 +1,59 @@
+import React, { useState } from "react";
+import { View, Image, StyleSheet, TouchableOpacity, Text } from "react-native";
+
+const DisplayAnImageWithStyle = () => {
+  const [count, setCount] = useState(0);
+  function add() {
+    setCount(count + 1);
+    console.log(count);
+  }
+  function remove() {
+    setCount(0);
+    console.log(count);
+  }
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={add}>
+        <Image
+          style={styles.stretch}
+          source={require("./assets/download.jpg")}
+        />
+      </TouchableOpacity>
+      <Text style={styles.txt}>Count: {count}</Text>
+      <TouchableOpacity style={styles.but} onPress={remove}>
+        <Text
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "orange",
+            height: 45,
+            width: 180,
+            borderRadius: 20,
+            color: "black",
+            fontSize: 25
+          }}
+        >
+          Remove
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 50
+  },
+  stretch: {
+    marginTop: 230,
+    marginLeft: 70
+  },
+  txt: {
+    fontSize: 25,
+    marginTop: 30,
+    marginLeft: 156
+  },
+  but: {
+    marginTop: 10
+  }
+});
+export default DisplayAnImageWithStyle;
