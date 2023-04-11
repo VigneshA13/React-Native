@@ -1,0 +1,64 @@
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export default function App() {
+  // The below function is used to store data in cache
+  const setdata = () => {
+    console.log("Setdata Button");
+    AsyncStorage.setItem("name", "Vignesh");
+    AsyncStorage.setItem("dno", JSON.stringify(17545));
+  };
+
+  // The below function is used to View data in cache
+  const getdata = async () => {
+    const name = await AsyncStorage.getItem("name");
+    const dno = await AsyncStorage.getItem("dno");
+    console.log("Name : ", name);
+    console.log("DNo : ", dno);
+  };
+  return (
+    <SafeAreaView style={styles.container}>
+      <View>
+        <TouchableOpacity style={styles.button} onPress={setdata}>
+          <Text style={{ fontSize: 22, color: "white", fontWeight: "bold" }}>
+            Set Data
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ marginTop: 20 }}>
+        <TouchableOpacity style={styles.button} onPress={getdata}>
+          <Text style={{ fontSize: 22, color: "white", fontWeight: "bold" }}>
+            Show Data
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  button: {
+    borderWidth: 0.5,
+    height: 50,
+    width: 190,
+    borderColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 15,
+    backgroundColor: "darkmagenta"
+  }
+});
