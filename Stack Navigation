@@ -1,0 +1,148 @@
+-----App.js-----
+
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import Home from './test/Home';
+import Home2 from './test/Home2';
+import Home3 from './test/Home3';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const App = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initalRouteName="Home">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home_2" component={Home2} />
+        <Stack.Screen name="Home_3" component={Home3} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+  },
+  bigBlue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+});
+
+export default App;
+-------------------------------------------------------------------------------------------------------------
+
+-----Home.js-----
+
+import React from 'react';
+import {StyleSheet, Text, View, Button} from 'react-native';
+
+const Home = ({navigation}) => {
+  const submit = () => {
+    navigation.navigate("Home_2");
+  }
+  return (
+    <View style={styles.container}>
+      <Text style={[styles.bigBlue, styles.red]}>welcome from Home.js</Text>
+      <Button
+        onPress={() => submit()}
+        title="Next"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
+    </View>
+    
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+  },
+  bigBlue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+});
+
+export default Home;
+----------------------------------------------------------------------------------------------------------
+
+-----Home2.js-----
+
+import React from 'react';
+import {StyleSheet, Text, View, Button} from 'react-native';
+
+const Home2 = ({navigation}) => {
+  const submit = () => {
+    navigation.navigate("Home_3");
+  }
+  return (
+    <View style={styles.container}>
+      <Text style={[styles.bigBlue, styles.red]}>welcome from Home_2.js</Text>
+      <Button
+        onPress={() => submit()}
+        title="Nest"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+  },
+  bigBlue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'blue',
+  },
+});
+
+export default Home2;
+----------------------------------------------------------------------------------------------------------
+-----Home3.js-----
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+
+const Home3 = (navigation) => {
+  
+  return (
+    <View style={styles.container}>
+      <Text style={[styles.bigBlue, styles.red]}>Last Page</Text>
+     
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+  },
+  bigBlue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+});
+
+export default Home3;
+--------------------------------------------------------------------------------------------------
